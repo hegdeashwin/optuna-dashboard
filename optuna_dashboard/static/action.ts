@@ -8,7 +8,7 @@ import {
 } from "./apiClient"
 import { studyDetailsState, studySummariesState } from "./state"
 
-export const actionCreator = () => {
+export const actionCreator = (): any => {
   const { enqueueSnackbar } = useSnackbar()
   const [studySummaries, setStudySummaries] = useRecoilState<StudySummary[]>(
     studySummariesState
@@ -17,7 +17,7 @@ export const actionCreator = () => {
     studyDetailsState
   )
 
-  const updateStudySummaries = (successMsg?: string) => {
+  const updateStudySummaries = (successMsg?: string): void => {
     getStudySummariesAPI()
       .then((studySummaries: StudySummary[]) => {
         setStudySummaries(studySummaries)
@@ -34,7 +34,7 @@ export const actionCreator = () => {
       })
   }
 
-  const updateStudyDetail = (studyId: number) => {
+  const updateStudyDetail = (studyId: number): void => {
     getStudyDetailAPI(studyId)
       .then((study) => {
         const newVal = Object.assign({}, studyDetails)
@@ -49,7 +49,7 @@ export const actionCreator = () => {
       })
   }
 
-  const createNewStudy = (studyName: string, directions: StudyDirection[]) => {
+  const createNewStudy = (studyName: string, directions: StudyDirection[]): void => {
     createNewStudyAPI(studyName, directions)
       .then((study_summary) => {
         const newVal = [...studySummaries, study_summary]
@@ -66,9 +66,9 @@ export const actionCreator = () => {
       })
   }
 
-  const deleteStudy = (studyId: number) => {
+  const deleteStudy = (studyId: number): void => {
     deleteStudyAPI(studyId)
-      .then((study) => {
+      .then(() => {
         setStudySummaries(studySummaries.filter((s) => s.study_id !== studyId))
         enqueueSnackbar(`Success to delete a study (id=${studyId})`, {
           variant: "success",

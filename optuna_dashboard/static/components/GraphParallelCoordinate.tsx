@@ -41,7 +41,7 @@ const plotCoordinate = (study: StudyDetail, objectiveId: number) => {
 
   // Intersection param names
   const objectiveValues: number[] = filteredTrials.map(
-    (t) => t.values![objectiveId]
+    (t) => t && t.values && t.values[objectiveId]
   )
   const dimensions = [
     {
@@ -53,7 +53,7 @@ const plotCoordinate = (study: StudyDetail, objectiveId: number) => {
   study.intersection_search_space.forEach((s) => {
     const valueStrings = filteredTrials.map((t) => {
       const param = t.params.find((p) => p.name === s.name)
-      return param!.value
+      return param && param.value
     })
     const isnum = valueStrings.every((v) => {
       return !isNaN(parseFloat(v))
